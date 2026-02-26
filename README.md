@@ -227,7 +227,9 @@ cd ~/Documents/MidtermCue
 
 ## 8. Possible Extensions
 
+- Will definitely be adding a **Computer vision model to add assistance on what balls to target and game prediction**
 - **More classes:** Add a "miscue" class (tip misses contact point) — would require gyro spike detection
 - **Stability score display:** Stream the score to a small OLED display instead of just LEDs
 - **Wake phrase:** Add audio trigger (Vosk) so the device only activates when the user says "ready" — avoiding false triggers from walking near the table
 - **Data augmentation:** Add small Gaussian noise to training samples to improve robustness to session-to-session variation in how the cue is held
+
