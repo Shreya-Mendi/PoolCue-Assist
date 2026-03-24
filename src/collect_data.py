@@ -9,13 +9,18 @@ import time
 import math
 import csv
 import os
+import sys
 import argparse
 import numpy as np
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from imu_helpers import sensor, load_cal
 
+ROOT           = Path(__file__).resolve().parent.parent
 SAMPLE_RATE_HZ = 100   # samples per second
 WINDOW_S       = 1.0   # how long each stroke window is
-CSV_FILE       = "stroke_data.csv"
+CSV_FILE       = ROOT / "data" / "stroke_data.csv"
 CSV_HEADER     = ["peak_accel", "mean_gyro_y", "var_gyro_y", "mean_gyro_z", "var_gyro_z", "duration", "label"]
 
 
@@ -69,7 +74,7 @@ def main():
         print("Calibration loaded.")
 
     # Create CSV with header if it doesn't exist yet
-    if not os.path.exists(CSV_FILE):
+    if not CSV_FILE.exists():
         with open(CSV_FILE, "w", newline="") as f:
             csv.writer(f).writerow(CSV_HEADER)
         print(f"Created {CSV_FILE}")
