@@ -189,11 +189,13 @@ def main():
 
     pwm_green, pwm_red, pwm_buzzer = setup_gpio()
 
-    # Startup sequence
-    lcd_print("Pool Cue Assist", "Initializing...")
-    time.sleep(1)
+    # Startup sequence — wait for first button press to begin
+    lcd_print("Pool Cue Assist", "Press btn start")
     beep_ready(pwm_buzzer)
-    lcd_print("Press button to", "start stroke")
+    wait_for_button_press()
+    while GPIO.input(BUTTON_PIN) == GPIO.LOW:
+        time.sleep(0.05)
+    lcd_print("Ready!", "")
 
     stroke_count = 0
     good_count   = 0
@@ -210,11 +212,11 @@ def main():
             height_warning = ""
             if dist is not None:
                 if dist < CUE_HEIGHT_OK_MIN:
-                    height_warning = "Cue too low!"
+                    height_warning = f"Too low {dist}cm"
                 elif dist > CUE_HEIGHT_OK_MAX:
-                    height_warning = "Cue too high!"
+                    height_warning = f"Too high {dist}cm"
                 else:
-                    height_warning = f"Height: {dist}cm OK"
+                    height_warning = f"Ht:{dist}cm OK"
 
             lcd_print("Recording...", height_warning)
             set_leds(pwm_green, pwm_red, 0.5)  # both dim while recording
@@ -242,7 +244,6 @@ def main():
             if good_prob >= 0.5:
                 good_count += 1
                 label = "GOOD"
-                beep_good(pwm_buzzer)
             else:
                 label = "BAD"
                 beep_bad(pwm_buzzer)
@@ -252,7 +253,7 @@ def main():
             # ── LCD output ───────────────────────────────────────────────────
             score_pct = int(good_prob * 100)
             lcd_print(
-                f"{label}  {score_pct}%",
+                f"{label} Sc:{score_pct}%",
                 f"Good:{good_count}/{stroke_count}"
             )
 
@@ -261,10 +262,9 @@ def main():
             print(f"Stroke {stroke_count:3d}: {label}  score={score_pct}%  "
                   f"height={dist_str}  good={good_count}/{stroke_count}")
 
-            # Hold result on LCD for 2s then prompt for next stroke
-            time.sleep(2.0)
-            set_leds(pwm_green, pwm_red, 0.0)
-            lcd_print("Press button to", "start stroke")
+            # Wait for button release before accepting next press
+            while GPIO.input(BUTTON_PIN) == GPIO.LOW:
+                time.sleep(0.05)
 
     except KeyboardInterrupt:
         print("\nStopping.")
