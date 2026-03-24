@@ -11,9 +11,11 @@ from sklearn.model_selection import cross_val_score, StratifiedKFold, train_test
 from sklearn.metrics import classification_report, confusion_matrix
 import joblib
 import numpy as np
+from pathlib import Path
 
-CSV_FILE  = "stroke_data.csv"
-MODEL_OUT = "stroke_model.pkl"
+ROOT      = Path(__file__).resolve().parent.parent
+CSV_FILE  = ROOT / "data"   / "stroke_data.csv"
+MODEL_OUT = ROOT / "models" / "stroke_model.pkl"
 
 FEATURES = ["peak_accel", "mean_gyro_y", "var_gyro_y", "mean_gyro_z", "var_gyro_z", "duration"]
 

@@ -19,11 +19,18 @@
 
 import time
 import math
+import sys
 import joblib
 import numpy as np
 import pandas as pd
 import RPi.GPIO as GPIO
+from pathlib import Path
+
+# Allow imports from src/ regardless of working directory
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from imu_helpers import sensor, load_cal
+
+ROOT = Path(__file__).resolve().parent.parent
 
 # ── Try to import LCD library (I2C 16x2) ────────────────────────────────────
 try:
@@ -54,7 +61,7 @@ WINDOW_S        = 1.0
 TRIGGER_ACCEL   = 2.0
 
 # ── Model ────────────────────────────────────────────────────────────────────
-MODEL_FILE = "stroke_model.pkl"
+MODEL_FILE = ROOT / "models" / "stroke_model.pkl"
 FEATURES   = ["peak_accel", "mean_gyro_y", "var_gyro_y", "mean_gyro_z", "var_gyro_z", "duration"]
 
 # ── Cue height thresholds (cm) ───────────────────────────────────────────────

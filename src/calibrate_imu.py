@@ -1,7 +1,11 @@
 # calibrate_imu.py
 import time
 import json
+from pathlib import Path
 from mpu6050 import mpu6050
+
+ROOT = Path(__file__).resolve().parent.parent
+CAL_FILE = ROOT / 'imu_calibration.json'
 
 s = mpu6050(0x68)
 N = 500
@@ -27,9 +31,9 @@ gyro_bias = {k: gyro_sum[k] / N for k in gyro_sum}
 
 cal = {'acc_bias': acc_bias, 'gyro_bias': gyro_bias}
 
-with open('imu_calibration.json', 'w') as f:
+with open(CAL_FILE, 'w') as f:
     json.dump(cal, f, indent=2)
 
-print("\nCalibration complete. Saved to imu_calibration.json")
+print(f"\nCalibration complete. Saved to {CAL_FILE}")
 print(f"  Accel bias : {acc_bias}")
 print(f"  Gyro bias  : {gyro_bias}")

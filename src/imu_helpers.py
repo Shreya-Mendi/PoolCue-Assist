@@ -1,13 +1,17 @@
 # imu_helpers.py
 import math
 import json
+from pathlib import Path
 from mpu6050 import mpu6050
 
 sensor = mpu6050(0x68)
 
-def load_cal(fname='imu_calibration.json'):
+_ROOT = Path(__file__).resolve().parent.parent
+
+def load_cal(fname=None):
+    path = Path(fname) if fname else _ROOT / 'imu_calibration.json'
     try:
-        return json.load(open(fname))
+        return json.load(open(path))
     except:
         return None
 
