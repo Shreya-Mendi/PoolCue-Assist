@@ -1,0 +1,16 @@
+[Unit]
+Description=PoolCue Vision Assist
+After=multi-user.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/PoolCue-Assist
+ExecStart=/usr/bin/python3 /home/pi/PoolCue-Assist/src/main.py
+Restart=always
+RestartSec=5
+# Pass API key as environment variable — edit this line with your key
+Environment=ANTHROPIC_API_KEY=your_key_here
+
+[Install]
+WantedBy=multi-user.target

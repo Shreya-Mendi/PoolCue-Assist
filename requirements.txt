@@ -1,0 +1,20 @@
+# Vision
+ultralytics>=8.0
+opencv-python>=4.8
+roboflow
+
+# LLM
+anthropic>=0.25
+
+# Audio
+pyttsx3
+
+# Hardware (Pi only — will skip gracefully on laptop)
+RPi.GPIO; platform_machine == "aarch64" or platform_machine == "armv7l"
+mpu6050-raspberrypi; platform_machine == "aarch64" or platform_machine == "armv7l"
+RPLCD; platform_machine == "aarch64" or platform_machine == "armv7l"
+
+# Utilities
+numpy
+joblib
+Pillow
