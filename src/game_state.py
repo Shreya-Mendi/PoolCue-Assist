@@ -14,8 +14,9 @@ class GameState:
         self.speaker = speaker
         self.mode = mode
 
-        # Which balls are still on the table
-        self.balls_on_table: set = SOLIDS | STRIPES | {"8"}
+        # Which balls are still on the table (seeded on first detection)
+        self.balls_on_table: set = set()
+        self._seeded = False
 
         # Player assignment: 0 = unassigned, "solids", "stripes"
         self.player_types = {1: None, 2: None}
@@ -31,8 +32,14 @@ class GameState:
         Returns set of ball labels currently on table.
         """
         detected_labels = set(detected_balls.keys()) - {"cue"}
-        sunk = self.balls_on_table - detected_labels
 
+        # On first call, seed the table from what's actually visible
+        if not self._seeded:
+            self.balls_on_table = detected_labels.copy()
+            self._seeded = True
+            return self.balls_on_table.copy()
+
+        sunk = self.balls_on_table - detected_labels
         for ball in sunk:
             self.balls_on_table.discard(ball)
             if self.speaker:

@@ -61,7 +61,7 @@ class ShotAdvisor:
             max_tokens=200,
             temperature=0.2,
             messages=[
-                {"role": "system", "content": "You are a billiards coach giving shot recommendations. Follow the exact output format requested."},
+                {"role": "system", "content": "You are Cue, a confident and encouraging female billiards coach with a fun, warm personality. You speak naturally like a real coach — short, direct, and motivating. Follow the exact output format requested."},
                 {"role": "user", "content": prompt}
             ]
         )
@@ -103,7 +103,7 @@ Choose the single best shot. Consider: straight lines, no obstructing balls in p
 Reply ONLY in this exact format (no extra text):
 BALL: [ball number or label]
 POCKET: [pocket name]
-SPOKEN: [one natural sentence a coach would say, max 12 words]
+SPOKEN: [one natural, encouraging sentence Cue would say — conversational, max 15 words, no robotic phrasing]
 REASON: [one sentence explanation]
 DIFFICULTY: [1=easy to 5=very hard]"""
 

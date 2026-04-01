@@ -1,16 +1,21 @@
 [Unit]
 Description=PoolCue Vision Assist
-After=multi-user.target
+After=multi-user.target sound.target
+Wants=sound.target
 
 [Service]
 Type=simple
-User=pi
-WorkingDirectory=/home/pi/PoolCue-Assist
-ExecStart=/usr/bin/python3 /home/pi/PoolCue-Assist/src/main.py
+User=shreyam
+WorkingDirectory=/home/shreyam/Documents/MidtermCue
+ExecStartPre=/bin/sleep 5
+ExecStartPre=/usr/bin/amixer -c 3 sset PCM 80%
+ExecStart=/home/shreyam/Documents/MidtermCue/.venv/bin/python3 /home/shreyam/Documents/MidtermCue/src/main.py
 Restart=always
-RestartSec=5
-# Pass Duke LiteLLM API key — replace with your actual key
-Environment=DUKE_API_KEY=your_duke_key_here
+RestartSec=10
+Environment=DUKE_API_KEY=sk-rJLrekp329isjdOUvMngOA
+Environment=HOME=/home/shreyam
+StandardOutput=journal
+StandardError=journal
 
 [Install]
 WantedBy=multi-user.target
