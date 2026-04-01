@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Pool Balls — Print Sheet</title>
+<style>
+  @media print {
+    body { margin: 0; }
+    .no-print { display: none; }
+  }
+  body {
+    font-family: Arial, sans-serif;
+    background: #fff;
+    padding: 20px;
+  }
+  h2 { text-align: center; font-size: 14px; color: #333; margin-bottom: 4px; }
+  p  { text-align: center; font-size: 11px; color: #666; margin-bottom: 16px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+    max-width: 720px;
+    margin: auto;
+  }
+  .ball-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .ball-wrap span {
+    font-size: 10px;
+    font-weight: bold;
+    color: #333;
+  }
+  svg.ball {
+    width: 80px;
+    height: 80px;
+  }
+</style>
+</head>
+<body>
+
+<h2>PoolCue Vision Assist — Ball Print Sheet</h2>
+<p class="no-print">Print this page → cut out each ball → paste on cardboard. Print at 100% scale (no fit-to-page).</p>
+
+<div class="grid">
+
+  <!-- CUE BALL -->
+  <div class="ball-wrap">
+    <svg class="ball" viewBox="0 0 100 100">
+      <defs>
+        <radialGradient id="g-cue" cx="38%" cy="35%" r="60%">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="100%" stop-color="#cccccc"/>
+        </radialGradient>
+      </defs>
+      <circle cx="50" cy="50" r="46" fill="url(#g-cue)" stroke="#aaa" stroke-width="2"/>
+    </svg>
+    <span>CUE</span>
+  </div>
+
+  <!-- BALL 1 — YELLOW solid -->
+  <div class="ball-wrap">
+    <svg class="ball" viewBox="0 0 100 100">
+      <defs><radialGradient id="g1" cx="38%" cy="35%" r="60%"><stop offset="0%" stop-color="#fff8a0"/><stop offset="100%" stop-color="#e6b800"/></radialGradient></defs>
+      <circle cx="50" cy="50" r="46" fill="url(#g1)" stroke="#b8860b" stroke-width="2"/>
+      <circle cx="50" cy="50" r="18" fill="white" opacity="0.9"/>
+      <text x="50" y="56" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">1</text>
+    </svg>
+    <span>1 — YELLOW</span>
+  </div>
+
+  <!-- BALL 2 — BLUE solid -->
+  <div class="ball-wrap">
+    <svg class="ball" viewBox="0 0 100 100">
+      <defs><radialGradient id="g2" cx="38%" cy="35%" r="60%"><stop offset="0%" stop-color="#8ab4f8"/><stop offset="100%" stop-color="#1a4fa8"/></radialGradient></defs>
+      <circle cx="50" cy="50" r="46" fill="url(#g2)" stroke="#0d3a8a" stroke-width="2"/>
+      <circle cx="50" cy="50" r="18" fill="white" opacity="0.9"/>
+      <text x="50" y="56" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">2</text>
+    </svg>
+    <span>2 — BLUE</span>
+  </div>
+
+  <!-- BALL 3 — RED solid -->
+  <div class="ball-wrap">
+    <svg class="ball" viewBox="0 0 100 100">
+      <defs><radialGradient id="g3" cx="38%" cy="35%" r="60%"><stop offset="0%" stop-color="#ff9090"/><stop offset="100%" stop-color="#cc0000"/></radialGradient></defs>
+      <circle cx="50" cy="50" r="46" fill="url(#g3)" stroke="#990000" stroke-width="2"/>
+      <circle cx="50" cy="50" r="18" fill="white" opacity="0.9"/>
+      <text x="50" y="56" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">3</text>
+    </svg>
+    <span>3 — RED</span>
+  </div>
+
+  <!-- BALL 4 — PURPLE solid -->
+  <div class="ball-wrap">
+    <svg class="ball" viewBox="0 0 100 100">
+      <defs><radialGradient id="g4" cx="38%" cy="35%" r="60%"><stop offset="0%" stop-color="#c89aff"/><stop offset="100%" stop-color="#6a0dad"/></radialGradient></defs>
+      <circle cx="50" cy="50" r="46" fill="url(#g4)" stroke="#4a0080" stroke-width="2"/>
+      <circle cx="50" cy="50" r="18" fill="white" opacity="0.9"/>
+      <text x="50" y="56" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">4</text>
+    </svg>
+    <span>4 — PURPLE</span>
+  </div>
+
+  <!-- BALL 5 — ORANGE solid -->
+  <div class="ball-wrap">
+    <svg class="ball" viewBox="0 0 100 100">
+      <defs><radialGradient id="g5" cx="38%" cy="35%" r="60%"><stop offset="0%" stop-color="#ffd090"/><stop offset="100%" stop-color="#e06000"/></radialGradient></defs>
+      <circle cx="50" cy="50" r="46" fill="url(#g5)" stroke="#b04000" stroke-width="2"/>
+      <circle cx="50" cy="50" r="18" fill="white" opacity="0.9"/>
+      <text x="50" y="56" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">5</text>
+    </svg>
+    <span>5 — ORANGE</span>
+  </div>
+
+  <!-- BALL 6 — GREEN solid -->
+  <div class="ball-wrap">
+    <svg class="ball" viewBox="0 0 100 100">
+      <defs><radialGradient id="g6" cx="38%" cy="35%" r="60%"><stop offset="0%" stop-color="#90e890"/><stop offset="100%" stop-color="#0a7a0a"/></radialGradient></defs>
+      <circle cx="50" cy="50" r="46" fill="url(#g6)" stroke="#085a08" stroke-width="2"/>
+      <circle cx="50" cy="50" r="18" fill="white" opacity="0.9"/>
+      <text x="50" y="56" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">6</text>
+    </svg>
+    <span>6 — GREEN</span>
+  </div>
+
+  <!-- BALL 7 — MAROON solid -->
+  <div class="ball-wrap">
+    <svg class="ball" viewBox="0 0 100 100">
+      <defs><radialGradient id="g7" cx="38%" cy="35%" r="60%"><stop offset="0%" stop-color="#e08080"/><stop offset="100%" stop-color="#800000"/></radialGradient></defs>
+      <circle cx="50" cy="50" r="46" fill="url(#g7)" stroke="#600000" stroke-width="2"/>
+      <circle cx="50" cy="50" r="18" fill="white" opacity="0.9"/>
+      <text x="50" y="56" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">7</text>
+    </svg>
+    <span>7 — MAROON</span>
+  </div>
+
+  <!-- BALL 8 — BLACK -->
+  <div class="ball-wrap">
+    <svg class="ball" viewBox="0 0 100 100">
+      <defs><radialGradient id="g8" cx="38%" cy="35%" r="60%"><stop offset="0%" stop-color="#666"/><stop offset="100%" stop-color="#111"/></radialGradient></defs>
+      <circle cx="50" cy="50" r="46" fill="url(#g8)" stroke="#000" stroke-width="2"/>
+      <circle cx="50" cy="50" r="18" fill="white" opacity="0.9"/>
+      <text x="50" y="56" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">8</text>
+    </svg>
+    <span>8 — BLACK</span>
+  </div>
+
+  <!-- BALL 9 — YELLOW stripe -->
+  <div class="ball-wrap">
+    <svg class="ball" viewBox="0 0 100 100">
+      <defs><radialGradient id="g9" cx="38%" cy="35%" r="60%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#ddd"/></radialGradient></defs>
+      <circle cx="50" cy="50" r="46" fill="url(#g9)" stroke="#aaa" stroke-width="2"/>
+      <rect x="4" y="32" width="92" height="36" fill="#e6b800"/>
+      <circle cx="50" cy="50" r="46" fill="none" stroke="#aaa" stroke-width="2"/>
+      <circle cx="50" cy="50" r="16" fill="white"/>
+      <text x="50" y="56" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">9</text>
+    </svg>
+    <span>9 — Y.STRIPE</span>
+  </div>
+
+  <!-- BALL 10 — BLUE stripe -->
+  <div class="ball-wrap">
+    <svg class="ball" viewBox="0 0 100 100">
+      <defs><radialGradient id="g10" cx="38%" cy="35%" r="60%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#ddd"/></radialGradient></defs>
+      <circle cx="50" cy="50" r="46" fill="url(#g10)" stroke="#aaa" stroke-width="2"/>
+      <rect x="4" y="32" width="92" height="36" fill="#1a4fa8"/>
+      <circle cx="50" cy="50" r="46" fill="none" stroke="#aaa" stroke-width="2"/>
+      <circle cx="50" cy="50" r="16" fill="white"/>
+      <text x="50" y="56" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">10</text>
+    </svg>
+    <span>10 — B.STRIPE</span>
+  </div>
+
+  <!-- BALL 11 — RED stripe -->
+  <div class="ball-wrap">
+    <svg class="ball" viewBox="0 0 100 100">
+      <defs><radialGradient id="g11" cx="38%" cy="35%" r="60%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#ddd"/></radialGradient></defs>
+      <circle cx="50" cy="50" r="46" fill="url(#g11)" stroke="#aaa" stroke-width="2"/>
+      <rect x="4" y="32" width="92" height="36" fill="#cc0000"/>
+      <circle cx="50" cy="50" r="46" fill="none" stroke="#aaa" stroke-width="2"/>
+      <circle cx="50" cy="50" r="16" fill="white"/>
+      <text x="50" y="56" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">11</text>
+    </svg>
+    <span>11 — R.STRIPE</span>
+  </div>
+
+  <!-- BALL 12 — PURPLE stripe -->
+  <div class="ball-wrap">
+    <svg class="ball" viewBox="0 0 100 100">
+      <defs><radialGradient id="g12" cx="38%" cy="35%" r="60%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#ddd"/></radialGradient></defs>
+      <circle cx="50" cy="50" r="46" fill="url(#g12)" stroke="#aaa" stroke-width="2"/>
+      <rect x="4" y="32" width="92" height="36" fill="#6a0dad"/>
+      <circle cx="50" cy="50" r="46" fill="none" stroke="#aaa" stroke-width="2"/>
+      <circle cx="50" cy="50" r="16" fill="white"/>
+      <text x="50" y="56" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">12</text>
+    </svg>
+    <span>12 — P.STRIPE</span>
+  </div>
+
+  <!-- BALL 13 — ORANGE stripe -->
+  <div class="ball-wrap">
+    <svg class="ball" viewBox="0 0 100 100">
+      <defs><radialGradient id="g13" cx="38%" cy="35%" r="60%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#ddd"/></radialGradient></defs>
+      <circle cx="50" cy="50" r="46" fill="url(#g13)" stroke="#aaa" stroke-width="2"/>
+      <rect x="4" y="32" width="92" height="36" fill="#e06000"/>
+      <circle cx="50" cy="50" r="46" fill="none" stroke="#aaa" stroke-width="2"/>
+      <circle cx="50" cy="50" r="16" fill="white"/>
+      <text x="50" y="56" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">13</text>
+    </svg>
+    <span>13 — O.STRIPE</span>
+  </div>
+
+  <!-- BALL 14 — GREEN stripe -->
+  <div class="ball-wrap">
+    <svg class="ball" viewBox="0 0 100 100">
+      <defs><radialGradient id="g14" cx="38%" cy="35%" r="60%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#ddd"/></radialGradient></defs>
+      <circle cx="50" cy="50" r="46" fill="url(#g14)" stroke="#aaa" stroke-width="2"/>
+      <rect x="4" y="32" width="92" height="36" fill="#0a7a0a"/>
+      <circle cx="50" cy="50" r="46" fill="none" stroke="#aaa" stroke-width="2"/>
+      <circle cx="50" cy="50" r="16" fill="white"/>
+      <text x="50" y="56" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">14</text>
+    </svg>
+    <span>14 — G.STRIPE</span>
+  </div>
+
+  <!-- BALL 15 — MAROON stripe -->
+  <div class="ball-wrap">
+    <svg class="ball" viewBox="0 0 100 100">
+      <defs><radialGradient id="g15" cx="38%" cy="35%" r="60%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#ddd"/></radialGradient></defs>
+      <circle cx="50" cy="50" r="46" fill="url(#g15)" stroke="#aaa" stroke-width="2"/>
+      <rect x="4" y="32" width="92" height="36" fill="#800000"/>
+      <circle cx="50" cy="50" r="46" fill="none" stroke="#aaa" stroke-width="2"/>
+      <circle cx="50" cy="50" r="16" fill="white"/>
+      <text x="50" y="56" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">15</text>
+    </svg>
+    <span>15 — M.STRIPE</span>
+  </div>
+
+</div>
+
+<br>
+<p class="no-print" style="font-size:12px; color:#888;">
+  Print at 100% — each ball is ~2.5cm diameter when printed. Cut out and paste on green cardboard in a pool table arrangement.
+</p>
+
+<button class="no-print" onclick="window.print()" style="display:block; margin: 10px auto; padding: 10px 30px; font-size:14px; cursor:pointer;">
+  Print
+</button>
+
+</body>
+</html>
