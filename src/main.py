@@ -8,9 +8,11 @@ Automatically re-announces whenever the ball layout changes.
 """
 
 import sys
+import argparse
 import time
 import json
 import cv2
+import numpy as np
 from pathlib import Path
 
 # Hardware imports (Pi only)
@@ -62,6 +64,11 @@ def balls_changed(prev: dict, curr: dict, threshold: int) -> bool:
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--test-image", type=str, default=None,
+                        help="Path to a static image file — skips camera, loops over the image for testing")
+    args = parser.parse_args()
+
     print("PoolCue Vision Assist starting...")
 
     # LCD
@@ -82,17 +89,27 @@ def main():
     advisor   = ShotAdvisor(model=CFG.get("llm_model", "gpt-4o-mini"))
     game      = GameState(speaker=speaker, mode=CFG.get("game_mode", "8ball"))
 
-    # Camera
-    cap = cv2.VideoCapture(CFG.get("camera_index", 0))
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-    if not cap.isOpened():
-        speaker.say("Camera not found", block=True)
-        lcd_write(lcd, "ERROR", "No camera")
-        sys.exit(1)
+    # Camera or test image
+    test_frame = None
+    cap = None
+    if args.test_image:
+        test_frame = cv2.imread(args.test_image)
+        if test_frame is None:
+            print(f"[ERROR] Could not load test image: {args.test_image}")
+            sys.exit(1)
+        print(f"[TEST MODE] Using static image: {args.test_image}")
+        frame = test_frame
+    else:
+        cap = cv2.VideoCapture(CFG.get("camera_index", 0))
+        cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+        if not cap.isOpened():
+            speaker.say("Camera not found", block=True)
+            lcd_write(lcd, "ERROR", "No camera")
+            sys.exit(1)
+        ret, frame = cap.read()
 
     # Pocket calibration (click once, saved forever)
-    ret, frame = cap.read()
     if not pocket_map.is_calibrated():
         speaker.say("Click each pocket to calibrate", block=True)
         lcd_write(lcd, "CALIBRATE", "Click pockets")
@@ -108,9 +125,12 @@ def main():
 
     try:
         while True:
-            ret, frame = cap.read()
-            if not ret:
-                continue
+            if test_frame is not None:
+                frame = test_frame.copy()
+            else:
+                ret, frame = cap.read()
+                if not ret:
+                    continue
 
             frame_h, frame_w = frame.shape[:2]
             balls = detector.detect(frame)
@@ -157,7 +177,8 @@ def main():
     except KeyboardInterrupt:
         print("\nStopping.")
     finally:
-        cap.release()
+        if cap is not None:
+            cap.release()
         cv2.destroyAllWindows()
         lcd_write(lcd, "Goodbye!", "")
 
