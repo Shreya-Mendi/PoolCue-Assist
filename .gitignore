@@ -6,9 +6,7 @@ dataset/train/
 dataset/valid/
 dataset/test/
 
-# Model weights — too large for git, train in Colab and copy to Pi manually
-models/pool_vision/best.pt
-models/pool_vision/best.onnx
+# Only exclude last.pt (intermediate checkpoint, not needed)
 models/pool_vision/last.pt
 
 # Training run artifacts from Colab
