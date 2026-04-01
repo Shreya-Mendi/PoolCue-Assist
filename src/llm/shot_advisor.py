@@ -1,41 +1,49 @@
 """
-Shot advisor using Claude API.
-Takes current table state (ball positions, pocket positions, game context)
-and returns a structured shot recommendation with spoken text.
+Shot advisor using Duke OIT LiteLLM proxy (OpenAI-compatible endpoint).
+https://litellm.oit.duke.edu/
+
+Set DUKE_API_KEY env var or write key to ~/.duke_litellm_key.
+Model is configurable in config/settings.json (default: gpt-4o-mini).
 """
 
 import os
-import anthropic
 from pathlib import Path
+from openai import OpenAI
+
+
+DUKE_LITELLM_BASE = "https://litellm.oit.duke.edu"
 
 
 def _load_api_key() -> str:
-    # Check env var first, then fallback to file
-    key = os.environ.get("ANTHROPIC_API_KEY")
+    key = os.environ.get("DUKE_API_KEY")
     if key:
         return key
-    key_file = Path.home() / ".anthropic_key"
+    key_file = Path.home() / ".duke_litellm_key"
     if key_file.exists():
         return key_file.read_text().strip()
     raise RuntimeError(
-        "No Anthropic API key found. "
-        "Set ANTHROPIC_API_KEY env var or write key to ~/.anthropic_key"
+        "No Duke LiteLLM API key found. "
+        "Set DUKE_API_KEY env var or write key to ~/.duke_litellm_key"
     )
 
 
 class ShotAdvisor:
-    def __init__(self):
-        self.client = anthropic.Anthropic(api_key=_load_api_key())
+    def __init__(self, model="gpt-4o-mini"):
+        self.model = model
+        self.client = OpenAI(
+            api_key=_load_api_key(),
+            base_url=DUKE_LITELLM_BASE,
+        )
         self._last_recommendation = None
 
     def recommend(self, balls: dict, pockets: dict, game_state: dict) -> dict:
         """
-        Ask Claude for the best shot given current table state.
+        Ask LLM for the best shot given current table state.
 
         Args:
             balls: {"cue": (cx,cy), "4": (cx,cy), ...}
             pockets: {"top-left": (cx,cy), ...}
-            game_state: {"mode": "8ball", "player_type": "solids", "turn": 1}
+            game_state: {"mode": "8ball", "player_type": "solids", "frame_w": 640, "frame_h": 480}
 
         Returns:
             {
@@ -48,13 +56,17 @@ class ShotAdvisor:
         """
         prompt = self._build_prompt(balls, pockets, game_state)
 
-        message = self.client.messages.create(
-            model="claude-haiku-4-5-20251001",  # Haiku: fast + cheap for real-time use
+        response = self.client.chat.completions.create(
+            model=self.model,
             max_tokens=200,
-            messages=[{"role": "user", "content": prompt}]
+            temperature=0.2,
+            messages=[
+                {"role": "system", "content": "You are a billiards coach giving shot recommendations. Follow the exact output format requested."},
+                {"role": "user", "content": prompt}
+            ]
         )
 
-        return self._parse_response(message.content[0].text)
+        return self._parse_response(response.choices[0].message.content)
 
     def _build_prompt(self, balls, pockets, game_state) -> str:
         mode = game_state.get("mode", "8ball")

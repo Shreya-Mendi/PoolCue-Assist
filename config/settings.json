@@ -2,11 +2,13 @@
   "game_mode": "8ball",
   "camera_index": 0,
   "detection_conf": 0.45,
+  "imgsz": 320,
   "laser_color": "green",
   "laser_gpio_controlled": false,
   "laser_pin": 25,
   "button_pin": 18,
   "lcd_address": "0x27",
   "table_change_threshold": 2,
-  "show_display": false
+  "show_display": false,
+  "llm_model": "gpt-4o-mini"
 }

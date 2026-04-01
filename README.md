@@ -13,10 +13,10 @@ A two-part billiards assistant built on a Raspberry Pi 4:
 Mounts an IMU on the cue. Detects and classifies stroke quality (good vs bad) using a trained Decision Tree. Feedback via LCD, LEDs, and buzzer.
 
 **Final — Vision Assistant**
-Adds a camera, speaker, and laser pointer. Detects all balls on the table using a YOLOv11 model trained on a merged Roboflow dataset. Passes table state to Claude (LLM) for shot recommendation. Tracks the laser dot on the cue tip and guides the player onto the correct aim line in real time. IMU stroke grading from the midterm is reused after each shot.
+Adds a Pi Camera Module, USB speaker, and laser pointer on the cue tip. Detects all balls on the table using a YOLOv11n model trained locally on a 1,200-image Roboflow dataset (CueTor Billiards). Passes table state to a GPT-4o-mini via Duke OIT LiteLLM proxy for shot recommendation. Tracks the laser dot on the cue tip and guides the player onto the correct aim line in real time. IMU stroke grading from the midterm is reused after each shot.
 
 **The full loop:**
-> Plug in Pi → camera watches table → Claude recommends a shot → speaker announces it → laser guides aim → button press → IMU grades stroke → repeat
+> Plug in Pi → camera watches table → LLM recommends a shot → USB speaker announces it → laser guides aim → button press → IMU grades stroke → repeat
 
 ---
 
@@ -26,7 +26,7 @@ Adds a camera, speaker, and laser pointer. Detects all balls on the table using 
 |---|---|---|
 | Raspberry Pi 4 | Main compute | — |
 | Pi Camera Module (CSI) | Ball detection + laser tracking | CSI ribbon cable |
-| Speaker (3.5mm aux) | TTS audio output | 3.5mm jack |
+| USB Speaker | TTS audio output | USB-A port |
 | Laser pointer (cue tip) | Aim marker | Taped to cue |
 | MPU6050 IMU | Stroke quality grading | I²C (0x68) |
 | Push Button | Trigger stroke capture | GPIO 18 |
@@ -89,14 +89,21 @@ PoolCue-Assist/
 
 ## Setup
 
-### 1. Train the vision model (Google Colab)
+### 1. Train the vision model
 
-1. Follow [train/merge_datasets.md](train/merge_datasets.md) to merge datasets on Roboflow
-2. Open [train/colab_train.ipynb](train/colab_train.ipynb) in Google Colab
+**Option A — Google Colab (recommended, free T4 GPU, ~15 min)**
+1. Upload the dataset zip to your Google Drive
+2. Open [train/colab_train.ipynb](train/colab_train.ipynb) in Colab
 3. Runtime → Change runtime type → **T4 GPU**
-4. Paste your Roboflow API key + dataset details into the config cell
+4. Update the dataset path cell to point to your Drive zip
 5. Run all cells — downloads `best.pt` at the end
 6. Place `best.pt` in `models/pool_vision/best.pt`
+
+**Option B — Local Mac (Apple MPS GPU, ~30-40 min)**
+```bash
+python3 scripts/train_local.py
+```
+Weights saved to `models/pool_vision/yolo11n_pool/weights/best.pt` automatically.
 
 ### 2. One-time Pi setup
 

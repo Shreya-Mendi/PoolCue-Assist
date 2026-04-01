@@ -140,10 +140,10 @@ def main():
     speaker = Speaker()
     speaker.say("Pool Cue Vision Assist ready", block=True)
 
-    detector = BallDetector(conf_threshold=CFG.get("detection_conf", 0.45))
+    detector = BallDetector(conf_threshold=CFG.get("detection_conf", 0.45), imgsz=CFG.get("imgsz", 320))
     laser_tracker = LaserTracker(color=LASER_COLOR)
     pocket_map = PocketMap()
-    advisor = ShotAdvisor()
+    advisor = ShotAdvisor(model=CFG.get("llm_model", "gpt-4o-mini"))
     aim_guide = AimGuide(speaker=speaker, lcd=lcd)
     game = GameState(speaker=speaker, mode=CFG.get("game_mode", "8ball"))
 

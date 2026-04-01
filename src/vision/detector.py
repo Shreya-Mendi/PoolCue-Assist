@@ -15,7 +15,7 @@ MODEL_PATH = Path(__file__).parents[2] / "models" / "pool_vision" / "best.pt"
 
 
 class BallDetector:
-    def __init__(self, conf_threshold=0.45):
+    def __init__(self, conf_threshold=0.45, imgsz=320):
         from ultralytics import YOLO
         if not MODEL_PATH.exists():
             raise FileNotFoundError(
@@ -24,6 +24,7 @@ class BallDetector:
             )
         self.model = YOLO(str(MODEL_PATH))
         self.conf = conf_threshold
+        self.imgsz = imgsz
         # Class names come from the model itself — set during training
         self.class_names = self.model.names  # dict: {0: "cue", 1: "1", ...}
 
@@ -33,7 +34,7 @@ class BallDetector:
         Returns dict: {"cue": (cx, cy), "4": (cx, cy), ...}
         Only includes balls detected above confidence threshold.
         """
-        results = self.model(frame, conf=self.conf, verbose=False)[0]
+        results = self.model(frame, conf=self.conf, imgsz=self.imgsz, verbose=False)[0]
         balls = {}
 
         for box in results.boxes:
@@ -52,6 +53,6 @@ class BallDetector:
 
     def draw(self, frame, balls: dict) -> np.ndarray:
         """Draw bounding boxes and labels on frame for debugging."""
-        results = self.model(frame, conf=self.conf, verbose=False)[0]
+        results = self.model(frame, conf=self.conf, imgsz=self.imgsz, verbose=False)[0]
         annotated = results.plot()
         return annotated

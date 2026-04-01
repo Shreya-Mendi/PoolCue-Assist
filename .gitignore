@@ -1,5 +1,36 @@
+# Dataset zip — too large for GitHub
+*.zip
+
+# Dataset images/labels — too large for GitHub, keep locally or in Drive
+dataset/train/
+dataset/valid/
+dataset/test/
+
+# Model weights — too large for git, train in Colab and copy to Pi manually
+models/pool_vision/best.pt
+models/pool_vision/best.onnx
+models/pool_vision/last.pt
+
+# Training run artifacts from Colab
+runs/
+pool_vision/
+
+# Pocket calibration — generated on Pi at runtime
+config/pocket_coords.json
+
+# Python
 __pycache__/
 *.pyc
+*.pyo
 .venv/
 *.egg-info/
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Secrets — never commit keys
+.env
+*.key
+# Service file may contain API keys — copy manually to Pi
+scripts/poolassist.service
