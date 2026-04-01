@@ -294,7 +294,7 @@ def capture_and_grade_stroke(speaker, lcd, clf, cal, pwm_green, pwm_red, pwm_buz
         speaker.say(base, block=True)
 
     dist_str = f"{dist:.0f}cm" if dist is not None else "N/A"
-    lcd_write(lcd, f"{label} {score_pct}%", f"Ht:{dist_str} Press btn")
+    lcd_write(lcd, f"{label} {score_pct}%", f"Ht:{dist_str} Btn->next")
     print(f"[STROKE] {label} score={score_pct}% dist={dist_str} tilt={tilt_note}")
     return label
 
@@ -493,6 +493,7 @@ def main():
                     # ── Stroke grading ───────────────────────────────────────
                     print("[BUTTON] Grading stroke...")
                     lcd_write(lcd, "Grading...", "Hold still!")
+                    label = "unknown"
                     if clf is not None:
                         try:
                             label = capture_and_grade_stroke(
@@ -509,14 +510,21 @@ def main():
                         speaker.say("Stroke model not loaded — skipping grade.", block=True)
                         lcd_write(lcd, "No model", "Skipping")
 
-                    # Reset game state for next image/cycle
-                    game._seeded = False
-                    last_rec = None
-                    state = "recommend"
                     time.sleep(0.5)  # brief pause so button release is clean
-                    lcd_write(lcd, "READY", "Press for shot")
-                    speaker.say("Press the button for your next shot recommendation!")
-                    print("[STATE] → recommend")
+
+                    if label == "BAD":
+                        # Let player retry — stay in grade state
+                        lcd_write(lcd, "Try again!", "Press to retry")
+                        speaker.say("Press the button to try that stroke again!")
+                        print("[STATE] → grade (retry)")
+                    else:
+                        # Good stroke (or unknown/error) — move to next shot
+                        game._seeded = False
+                        last_rec = None
+                        state = "recommend"
+                        lcd_write(lcd, "READY", "Press for shot")
+                        speaker.say("Press the button for your next shot recommendation!")
+                        print("[STATE] → recommend")
 
             btn_was_pressed = btn_now
 
