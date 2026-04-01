@@ -103,7 +103,7 @@ Choose the single best shot. Consider: straight lines, no obstructing balls in p
 Reply ONLY in this exact format (no extra text):
 BALL: [ball number or label]
 POCKET: [pocket name]
-SPOKEN: [one natural, encouraging sentence Cue would say — conversational, max 15 words, no robotic phrasing]
+SPOKEN: [2-3 sentences. First: briefly name 1-2 visible balls (e.g. "I see the 4 and 7 on the table."). Second: give the exact instruction (e.g. "Hit the 4 ball straight into the top-right pocket."). Third: naturally mention the difficulty (e.g. "This one's a pretty easy shot." or "This one's tricky, stay focused."). Natural tone, conversational, no robotic phrasing.]
 REASON: [one sentence explanation]
 DIFFICULTY: [1=easy to 5=very hard]"""
 
